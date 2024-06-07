@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Interview.Infrastructure\Interview.Infrastructure.csproj" />
     <ProjectReference Include="..\Interview.Application\Interview.Application.csproj" />
     <ProjectReference Include="..\Interview.Infrastructure\Interview.Infrastructure.csproj" />
   </ItemGroup>
