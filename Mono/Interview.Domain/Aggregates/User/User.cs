@@ -9,6 +9,21 @@ namespace Interview.Domain.Aggregates.User
 {
     public class User : EntityBase<Guid>
     {
+        public User(string firstName, string lastName, int age, bool gender, string phoneNumber, string address, string city, string province, string citizenId)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Age = age;
+            Gender = gender;
+            PhoneNumber = phoneNumber;
+            Address = address;
+            City = city;
+            Province = province;
+            CitizenId = citizenId;
+            IsDeleted = false;
+            CreatedAt = DateTime.Now;
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }

@@ -15,6 +15,7 @@ namespace Interview.Infrastructure.Persistences.EntityTypeConfigurations
         {
             builder.HasKey(_ => _.Id);
             builder.Property(_ => _.Id).ValueGeneratedOnAdd();
+            builder.Property(_ => _.CreatedAt).ValueGeneratedOnAdd();
         }
     }
 }
