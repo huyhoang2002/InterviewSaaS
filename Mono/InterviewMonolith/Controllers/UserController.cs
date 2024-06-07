@@ -35,5 +35,24 @@ namespace InterviewMonolith.Controllers
                 return Ok(result);
             }
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserCommand command)
+        {
+            _logger.LogInformation($"Updating user {command.UserId}");
+            command.UserId = id;
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+                _logger.LogError("Update user Failed !");
+            }
+            else
+            {
+                _logger.LogInformation("Update user success !");
+                return Ok(result);
+            }
+        }
     }
 }

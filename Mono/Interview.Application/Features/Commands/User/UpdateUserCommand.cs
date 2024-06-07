@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Interview.Application.Behaviors.Validators;
 using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.Repositories.Interfaces;
@@ -10,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace Interview.Application.Features.Commands.User
 {
-    public class UserCommand : ICommand<CommandResult<Guid>>
+    public class UpdateUserCommand : ICommand<CommandResult<Guid>>
     {
+        public Guid UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
@@ -24,30 +26,32 @@ namespace Interview.Application.Features.Commands.User
         public string CitizenId { get; set; }
     }
 
-    public class UserCommandHandler : ICommandHandler<UserCommand, CommandResult<Guid>>
+    public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, CommandResult<Guid>>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IValidator<Interview.Domain.Aggregates.User.User> _validator;
 
-        public UserCommandHandler(IUserRepository userRepository, IMapper mapper)
+        public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper, IValidator<Interview.Domain.Aggregates.User.User> validator)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _validator = validator;
         }
 
-        public Task<CommandResult<Guid>> Handle(UserCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult<Guid>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
+            var user = _userRepository.FindOneById(user => user.Id == request.UserId);
             var userMapper = _mapper.Map<Interview.Domain.Aggregates.User.User>(request);
-
-            var validation = new AddUserValidator().Validate(userMapper);
-            if (validation.IsValid)
+            var validator = _validator.Validate(userMapper);
+            if (validator.IsValid)
             {
-                _userRepository.Add(userMapper);
-                return Task.FromResult(CommandResult<Guid>.Success(userMapper.Id));
+                user.UpdateUser(userMapper);
+                return CommandResult<Guid>.Success(user.Id);
             }
             else
             {
-                return Task.FromResult(CommandResult<Guid>.Error("Validation failed"));
+                return CommandResult<Guid>.Error("Update validation failed !");
             }
         }
     }

@@ -18,6 +18,7 @@ builder.Services.AddCommandQuery();
 builder.Services.AddMediatr();
 builder.Services.AddRepositories();
 builder.Services.AddMapper();
+builder.Services.AddValidator();
 
 var app = builder.Build();
 
