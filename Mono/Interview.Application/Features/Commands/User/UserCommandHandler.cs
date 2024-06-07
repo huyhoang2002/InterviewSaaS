@@ -1,4 +1,5 @@
-﻿using Interview.Application.Behaviors.Validators;
+﻿using AutoMapper;
+using Interview.Application.Behaviors.Validators;
 using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.Repositories.Interfaces;
 using System;
@@ -26,34 +27,26 @@ namespace Interview.Application.Features.Commands.User
     public class UserCommandHandler : ICommandHandler<UserCommand, CommandResult<Guid>>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UserCommandHandler(IUserRepository userRepository)
+        public UserCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
-        public async Task<CommandResult<Guid>> Handle(UserCommand request, CancellationToken cancellationToken)
+        public Task<CommandResult<Guid>> Handle(UserCommand request, CancellationToken cancellationToken)
         {
-            var user = new Interview.Domain.Aggregates.User.User(
-                request.FirstName,
-                request.LastName,
-                request.Age,
-                request.Gender,
-                request.PhoneNumber,
-                request.Address,
-                request.City,
-                request.Province,
-                request.CitizenId
-            );
-            var validation = new AddUserValidator().Validate(user);
+            var userMapper = _mapper.Map<Interview.Domain.Aggregates.User.User>(request);
+            var validation = new AddUserValidator().Validate(userMapper);
             if (validation.IsValid)
             {
-                _userRepository.Add(user);
-                return CommandResult<Guid>.Success(user.Id);
+                _userRepository.Add(userMapper);
+                return Task.FromResult(CommandResult<Guid>.Success(userMapper.Id));
             }
             else
             {
-                return CommandResult<Guid>.Error("Validation failed");
+                return Task.FromResult(CommandResult<Guid>.Error("Validation failed"));
             }
         }
     }
