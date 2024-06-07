@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Features\Queries\" />
+    <Folder Include="Mapper\" />
+    <Folder Include="NewFolder\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

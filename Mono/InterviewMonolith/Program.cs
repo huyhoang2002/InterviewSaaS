@@ -17,6 +17,7 @@ builder.Services.AddUnitOfWork();
 builder.Services.AddCommandQuery();
 builder.Services.AddMediatr();
 builder.Services.AddRepositories();
+builder.Services.AddMapper();
 
 var app = builder.Build();
 

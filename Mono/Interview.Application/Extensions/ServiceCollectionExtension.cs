@@ -16,5 +16,11 @@ namespace Interview.Application.Extensions
             services.AddMediatR(Assembly.GetExecutingAssembly());
             return services;
         }
+
+        public static IServiceCollection AddMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            return services;
+        }
     }
 }
