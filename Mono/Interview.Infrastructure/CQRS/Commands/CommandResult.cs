@@ -36,7 +36,7 @@ namespace Interview.Infrastructure.CQRS.Commands
             Response = response;
         }
 
-        public CommandResult(bool isSuccess, string message) : base(isSuccess)
+        public CommandResult(bool isSuccess, dynamic message) : base(isSuccess)
         {
             Message = message;
         }
@@ -46,7 +46,7 @@ namespace Interview.Infrastructure.CQRS.Commands
             return new CommandResult<TResponse>(true, message);
         }
 
-        public static CommandResult<TResponse> Error(string message)
+        public static CommandResult<TResponse> Error(dynamic message)
         {
             return new CommandResult<TResponse>(false, message);
         }

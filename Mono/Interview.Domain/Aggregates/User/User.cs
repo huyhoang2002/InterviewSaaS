@@ -34,5 +34,16 @@ namespace Interview.Domain.Aggregates.User
         public string City { get; set; }
         public string? Province { get; set; }
         public string CitizenId { get; set; }
+
+        public void UpdateUser(User user)
+        {
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Age = user.Age;
+            Gender = user.Gender;
+            PhoneNumber = user.PhoneNumber;
+            Email = user.Email;
+            Address = user.Address;
+        }
     }
 }

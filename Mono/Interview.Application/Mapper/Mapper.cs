@@ -14,6 +14,7 @@ namespace Interview.Application.Mapper
         public Mapper()
         {
             CreateMap<User, UserCommand>().ReverseMap();
+            CreateMap<User, UpdateUserCommand>().ReverseMap();
         }
     }
 }

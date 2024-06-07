@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using Interview.Application.Behaviors.Validators;
+using Interview.Domain.Aggregates.User;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -20,6 +23,13 @@ namespace Interview.Application.Extensions
         public static IServiceCollection AddMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            return services;
+        }
+
+        public static IServiceCollection AddValidator(this IServiceCollection services)
+        {
+            services.AddScoped<IValidator<User>, AddUserValidator>();
+            services.AddScoped<IValidator<User>, UpdateUserValidator>();
             return services;
         }
     }
