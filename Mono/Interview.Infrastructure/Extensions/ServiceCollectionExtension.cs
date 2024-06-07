@@ -23,6 +23,11 @@ namespace Interview.Infrastructure.Extensions
             {
                 options.UseSqlServer(configuration.GetConnectionString("MSSqlServer"));
             });
+            var serviceProvider = service.BuildServiceProvider();
+            using (var context = serviceProvider.GetRequiredService<InterviewDbContext>())
+            {
+                context.Database.Migrate();
+            }
             return service;
         }
 
