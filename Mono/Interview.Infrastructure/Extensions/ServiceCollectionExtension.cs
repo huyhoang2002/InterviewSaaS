@@ -7,6 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Interview.Infrastructure.CQRS.Commands;
+using Interview.Infrastructure.CQRS.Queries;
+using Interview.Infrastructure.UnitOfWork.Interfaces;
+using Interview.Infrastructure.Repositories.Interfaces;
+using Interview.Infrastructure.Repositories;
 
 namespace Interview.Infrastructure.Extensions
 {
@@ -19,6 +24,24 @@ namespace Interview.Infrastructure.Extensions
                 options.UseSqlServer(configuration.GetConnectionString("MSSqlServer"));
             });
             return service;
+        }
+
+        public static IServiceCollection AddCommandQuery(this IServiceCollection services)
+        {
+            services.AddScoped<ICommandBus, CommandBus>();
+            return services;
+        }
+
+        public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+            return services;
+        }
+
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
+            return services;
         }
     }
 }

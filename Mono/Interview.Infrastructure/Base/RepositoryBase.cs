@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Interview.Infrastructure.Base
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         protected InterviewDbContext Context;
         protected DbSet<T> DbSet;

@@ -1,4 +1,8 @@
+using Interview.Application.Extensions;
+using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.Extensions;
+using MediatR;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInterviewDbContext(builder.Configuration);
+builder.Services.AddUnitOfWork();
+builder.Services.AddCommandQuery();
+builder.Services.AddMediatr();
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 
