@@ -45,14 +45,29 @@ namespace InterviewMonolith.Controllers
             var result = await _commandBus.SendAsync(command) as CommandResult;
             if (result?.IsSuccess == false)
             {
-                return BadRequest(result);
                 _logger.LogError("Update user Failed !");
+                return BadRequest(result);
             }
             else
             {
                 _logger.LogInformation("Update user success !");
                 return Ok(result);
             }
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            _logger.LogInformation($"Deleting user {id}");
+            var deleteUserCommand = new DeleteUserCommand
+            {
+                Id = id
+            };
+            var result = await _commandBus.SendAsync(deleteUserCommand) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }
