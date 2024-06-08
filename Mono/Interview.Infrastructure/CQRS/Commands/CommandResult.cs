@@ -46,7 +46,7 @@ namespace Interview.Infrastructure.CQRS.Commands
             return new CommandResult<TResponse>(true, message);
         }
 
-        public static CommandResult<TResponse> Error(dynamic message)
+        public static CommandResult<TResponse> Error(string message)
         {
             return new CommandResult<TResponse>(false, message);
         }
