@@ -1,6 +1,7 @@
 using Interview.Application.Extensions;
 using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.Extensions;
+using InterviewMonolith.Extensions;
 using MediatR;
 using System.Reflection;
 
@@ -19,6 +20,8 @@ builder.Services.AddMediatr();
 builder.Services.AddRepositories();
 builder.Services.AddMapper();
 builder.Services.AddValidator();
+builder.Services.AddAuth(builder.Configuration);
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -31,6 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

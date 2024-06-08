@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Interview.Domain.Aggregates.Identities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Interview.Infrastructure.Persistences.ApplicationDbContext
 {
-    public class InterviewDbContext : DbContext
+    public class InterviewDbContext : IdentityDbContext<Account>
     {
         public InterviewDbContext(DbContextOptions<InterviewDbContext> options) : base(options)
         {
@@ -17,6 +19,7 @@ namespace Interview.Infrastructure.Persistences.ApplicationDbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
