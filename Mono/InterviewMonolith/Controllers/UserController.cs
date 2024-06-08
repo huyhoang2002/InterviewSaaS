@@ -1,5 +1,6 @@
 ﻿using Interview.Application.Features.Commands.User;
 using Interview.Infrastructure.CQRS.Commands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,18 @@ namespace InterviewMonolith.Controllers
         {
             _commandBus = commandBus;
             _logger = logger;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            return Ok(new List<string>());
+        }
+
+        [HttpGet("verify")]
+        public async Task<IActionResult> GetUsersVerify()
+        {
+            return Ok();
         }
 
         [HttpPost]
