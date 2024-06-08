@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Interview.Application.Features.Commands.Companies;
 using Interview.Application.Features.Commands.User;
 using Interview.Domain.Aggregates.User;
+using Interview.Domain.Companies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Interview.Application.Mapper
         {
             CreateMap<User, UserCommand>().ReverseMap();
             CreateMap<User, UpdateUserCommand>().ReverseMap();
+            CreateMap<Company, AddCompanyCommand>().ReverseMap();
         }
     }
 }

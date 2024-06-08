@@ -34,6 +34,7 @@ namespace Interview.Infrastructure.Extensions
         public static IServiceCollection AddCommandQuery(this IServiceCollection services)
         {
             services.AddScoped<ICommandBus, CommandBus>();
+            services.AddScoped<IQueryBus, QueryBus>();
             return services;
         }
 
@@ -46,6 +47,7 @@ namespace Interview.Infrastructure.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
             return services;
         }
     }
