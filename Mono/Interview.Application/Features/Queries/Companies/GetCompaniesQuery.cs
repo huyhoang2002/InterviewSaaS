@@ -1,4 +1,5 @@
-﻿using Interview.Domain.Companies;
+﻿using Interview.Application.DTO.QueryDTO;
+using Interview.Domain.Companies;
 using Interview.Infrastructure.CQRS.Queries;
 using Interview.Infrastructure.Repositories.Interfaces;
 using MediatR;
@@ -10,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Interview.Application.Features.Queries.Companies
 {
-    public class GetCompaniesQuery : IQuery<IEnumerable<Company>>
+    public class GetCompaniesQuery : IQuery<IEnumerable<CompanyDTO>>
     {
     }
 
-    public class GetCompaniesQueryHandler : IQueryHandler<GetCompaniesQuery, IEnumerable<Company>>
+    public class GetCompaniesQueryHandler : IQueryHandler<GetCompaniesQuery, IEnumerable<CompanyDTO>>
     {
         private readonly ICompanyRepository _repository;
 
@@ -23,10 +24,19 @@ namespace Interview.Application.Features.Queries.Companies
             _repository = repository;
         }
 
-        public Task<IEnumerable<Company>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
+        public Task<IEnumerable<CompanyDTO>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
         {
             var companies = _repository.GetCompanies();
-            return Task.FromResult(companies);
+            var companiesViewModel = companies.Select(_ => new CompanyDTO(
+                    _.Id,
+                    _.CompanyName,
+                    _.CompanyLogoUrl,
+                    _.CompanyDescription,
+                    _.CompanyDomain,
+                    _.CompanyPhoneNumber,
+                    _.CompanyAddresses.Select(_ => new AddressDTO(_.Id, _.Street, _.District, _.City, _.Province))
+                ));
+            return Task.FromResult(companiesViewModel);
         }
     }
 }
