@@ -9,11 +9,13 @@ namespace Interview.Infrastructure.Base.Interfaces
 {
     public interface IRepositoryBase<T>
     {
-        public void Add(T entity);
-        public void Update(T entity);
-        public void Delete(T entity);
-        public IEnumerable<T> GetAll();
-        public IQueryable<T> FindById(Expression<Func<T, bool>> predicate);
-        public T FindOneById(Expression<Func<T, bool>> predicate);
+        void Add(T entity);
+        Task AddAsync(T entity);
+        void Update(T entity);
+        void Delete(T entity);
+        IEnumerable<T> GetAll();
+        IQueryable<T> FindById(Expression<Func<T, bool>> predicate);
+        T FindOneById(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken);
+        Task<T> FindOneByIdAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken);
     }
 }

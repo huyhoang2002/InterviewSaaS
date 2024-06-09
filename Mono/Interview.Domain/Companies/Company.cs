@@ -25,6 +25,22 @@ namespace Interview.Domain.Companies
         public IReadOnlyCollection<Rating> Ratings => ratings;
 
         private readonly List<Review> reviews = new List<Review>();
+
+        public Company(string companyName, string companyLogoUrl, string companyDescription, string companyDomain, string companyPhoneNumber, string email)
+        {
+            CompanyName = companyName;
+            CompanyLogoUrl = companyLogoUrl;
+            CompanyDescription = companyDescription;
+            CompanyDomain = companyDomain;
+            CompanyPhoneNumber = companyPhoneNumber;
+            Email = email;
+        }
+
         public IReadOnlyCollection<Review> Reviews => reviews;
+
+        public void AddAddress(Address address)
+        {
+            companyAddresses.Add(address);
+        }
     }
 }

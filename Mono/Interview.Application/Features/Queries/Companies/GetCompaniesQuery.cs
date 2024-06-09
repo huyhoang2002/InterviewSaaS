@@ -25,7 +25,7 @@ namespace Interview.Application.Features.Queries.Companies
 
         public Task<IEnumerable<Company>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
         {
-            var companies = _repository.GetAll();
+            var companies = _repository.GetCompanies();
             return Task.FromResult(companies);
         }
     }

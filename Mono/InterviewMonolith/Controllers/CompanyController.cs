@@ -2,8 +2,11 @@
 using Interview.Application.Features.Queries.Companies;
 using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.CQRS.Queries;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace InterviewMonolith.Controllers
 {
@@ -21,6 +24,7 @@ namespace InterviewMonolith.Controllers
         }
 
         [HttpGet]
+        //[Authorize(AuthenticationSchemes = GoogleDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetCompanies()
         {
             var getCompaniesQuery = new GetCompaniesQuery();
@@ -36,6 +40,20 @@ namespace InterviewMonolith.Controllers
             {
                 return Ok(result);
             } else
+            {
+                return BadRequest(result);
+            }
+        }
+        [HttpPost("address/{companyId}")]
+        public async Task<IActionResult> CreateAddress(Guid companyId, [FromBody] AddCompanyAddressCommand command)
+        {
+            command.CompanyId = companyId;
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == true)
+            {
+                return Ok(result);
+            }
+            else
             {
                 return BadRequest(result);
             }

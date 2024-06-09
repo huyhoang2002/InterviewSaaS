@@ -24,6 +24,11 @@ namespace Interview.Infrastructure.Base
             DbSet.Add(entity);
         }
 
+        public async Task AddAsync(T entity)
+        {
+            await DbSet.AddAsync(entity);
+        }
+
         public void Delete(T entity)
         {
             DbSet.Remove(entity);
@@ -34,9 +39,15 @@ namespace Interview.Infrastructure.Base
             return DbSet.Where(predicate);
         }
 
-        public T FindOneById(Expression<Func<T, bool>> predicate)
+        public T FindOneById(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
         {
             return DbSet.FirstOrDefault(predicate);
+        }
+
+        public async Task<T> FindOneByIdAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+        {
+            var result = await DbSet.FirstOrDefaultAsync(predicate, cancellationToken);
+            return result;
         }
 
         public IEnumerable<T> GetAll()

@@ -12,5 +12,6 @@ namespace Interview.Application.DTO.CommandDTO
         public string District { get; set; }
         public string City { get; set; }
         public string? Province { get; set; }
+        public Guid CompanyId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Interview.Domain.Companies;
+﻿using Interview.Domain.Aggregates.Identities;
+using Interview.Domain.Companies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -15,6 +16,9 @@ namespace Interview.Infrastructure.Persistences.EntityTypeConfigurations
         {
             builder.HasKey(_ => _.Id);
             builder.Property<Guid>(_ => _.Id).ValueGeneratedOnAdd();
+
+            var AddressNavigation = builder.Metadata.FindNavigation(nameof(Company.CompanyAddresses));
+            AddressNavigation.SetPropertyAccessMode(PropertyAccessMode.Property);
         }
     }
 }
