@@ -8,8 +8,7 @@ namespace Interview.Domain.Aggregates.Identities
 {
     public static class Role
     {
-        public const string USER = "USER";
-        public const string COMPANY = "COMPANY";
-        public const string ADMIN = "ADMIN";
+        public static List<string> Roles = new() { "ADMIN", "COMPANY", "USER" };
+
     }
 }
