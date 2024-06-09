@@ -11,5 +11,16 @@ namespace Interview.Domain.Aggregates.Identities
     {
         private List<Token> tokens => new List<Token>();
         public IReadOnlyCollection<Token> Tokens => tokens;
+
+        public Account()
+        {
+
+        }
+
+        public Account(string email, string username)
+        {
+            Email = email;
+            UserName = username;
+        }
     }
 }
