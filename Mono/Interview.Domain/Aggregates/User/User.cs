@@ -45,5 +45,11 @@ namespace Interview.Domain.Aggregates.User
             Email = user.Email;
             Address = user.Address;
         }
+
+        public bool SoftDelete()
+        {
+            IsDeleted = true;
+            return IsDeleted == true;
+        }
     }
 }

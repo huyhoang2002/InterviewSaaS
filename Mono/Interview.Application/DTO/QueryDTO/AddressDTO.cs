@@ -4,17 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Interview.Application.DTO.CommandDTO
+namespace Interview.Application.DTO.QueryDTO
 {
     public class AddressDTO
     {
-        public AddressDTO(string street, string district, string city, string province)
+        public AddressDTO(Guid id, string street, string district, string city, string province)
         {
+            Id = id;
             Street = street;
             District = district;
             City = city;
             Province = province;
         }
+        public Guid Id { get; set; }
 
         public string Street { get; set; }
         public string District { get; set; }

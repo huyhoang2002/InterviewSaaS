@@ -30,8 +30,15 @@ namespace Interview.Application.Features.Commands.User
             {
                 return Task.FromResult(CommandResult<Guid>.Error("No user found !"));
             }
-            _userRepository.Delete(user);
-            return Task.FromResult(CommandResult<Guid>.Success(user.Id));
+            var result = user.SoftDelete();
+            if (result == true)
+            {
+                return Task.FromResult(CommandResult<Guid>.Success(user.Id));
+            }
+            else
+            {
+                return Task.FromResult(CommandResult<Guid>.Error("Failed to remove user !"));
+            }
         }
     }
 }
