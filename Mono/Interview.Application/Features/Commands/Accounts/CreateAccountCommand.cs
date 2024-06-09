@@ -15,6 +15,7 @@ namespace Interview.Application.Features.Commands.Accounts
         public string Email { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string Role { get; set; }
     }
 
     public class CreateAccountCommandHandler : ICommandHandler<CreateAccountCommand, CommandResult<string>>
@@ -41,12 +42,17 @@ namespace Interview.Application.Features.Commands.Accounts
             {
                 return CommandResult<string>.Error("Failed to create account");
             }
-            var isRoleExist = await _roleManager.RoleExistsAsync(Role.USER);
+            var isRoleExist = await _roleManager.RoleExistsAsync(request.Role);
             if (isRoleExist == false) 
-            { 
-                var role = new IdentityRole(Role.USER);
-                await _roleManager.CreateAsync(role);
-                await _userManager.AddToRoleAsync(account, role.Name);
+            {
+                var roleProvided = Role.Roles.FirstOrDefault(_ => _.ToLower() == request.Role.ToLower());
+                if (roleProvided != null)
+                {
+                    var role = new IdentityRole(roleProvided);
+                    await _roleManager.CreateAsync(role);
+                    await _userManager.AddToRoleAsync(account, role.Name);
+                } 
+                return CommandResult<string>.Error("Role much match with the provided policy !");
             }
             return CommandResult<string>.Success(account.Id);
         }
