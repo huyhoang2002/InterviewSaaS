@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Interview.Application.DTO.CommandDTO;
 using Interview.Application.Features.Commands.Companies;
 using Interview.Application.Features.Commands.User;
 using Interview.Domain.Aggregates.User;
@@ -18,6 +19,7 @@ namespace Interview.Application.Mapper
             CreateMap<User, UserCommand>().ReverseMap();
             CreateMap<User, UpdateUserCommand>().ReverseMap();
             CreateMap<Company, AddCompanyCommand>().ReverseMap();
+            CreateMap<Address, AddCompanyAddressCommand>().ReverseMap();
         }
     }
 }

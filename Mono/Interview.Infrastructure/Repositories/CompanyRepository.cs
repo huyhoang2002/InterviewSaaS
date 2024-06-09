@@ -2,6 +2,7 @@
 using Interview.Infrastructure.Base;
 using Interview.Infrastructure.Persistences.ApplicationDbContext;
 using Interview.Infrastructure.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,13 @@ namespace Interview.Infrastructure.Repositories
     {
         public CompanyRepository(InterviewDbContext dbContext) : base(dbContext)
         {
+        }
+
+        public IEnumerable<Company> GetCompanies()
+        {
+            return DbSet
+                .Where(_ => _.IsDeleted == false)
+                .Include(_ => _.CompanyAddresses);
         }
     }
 }

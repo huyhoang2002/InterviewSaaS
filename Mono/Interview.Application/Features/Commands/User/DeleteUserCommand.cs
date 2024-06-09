@@ -25,7 +25,7 @@ namespace Interview.Application.Features.Commands.User
 
         public Task<CommandResult<Guid>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _userRepository.FindOneById(user => user.Id == request.Id);
+            var user = _userRepository.FindOneById(user => user.Id == request.Id, cancellationToken);
             if (user == null)
             {
                 return Task.FromResult(CommandResult<Guid>.Error("No user found !"));

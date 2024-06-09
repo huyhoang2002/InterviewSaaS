@@ -10,5 +10,6 @@ namespace Interview.Infrastructure.Repositories.Interfaces
 {
     public interface ICompanyRepository : IRepositoryBase<Company>
     {
+        IEnumerable<Company> GetCompanies();
     }
 }

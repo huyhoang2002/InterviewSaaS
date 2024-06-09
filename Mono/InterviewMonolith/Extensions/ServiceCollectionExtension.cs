@@ -26,11 +26,11 @@ namespace InterviewMonolith.Extensions
             services
                 .AddAuthentication(options =>
                 {
-                    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    //options.DefaultSignInScheme = GoogleDefaults.AuthenticationScheme;
-                    options.DefaultScheme = GoogleDefaults.AuthenticationScheme;
-                }).AddCookie().AddGoogle(options =>
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }).AddGoogle(options =>
                 {
+                    options.SaveTokens = true;
                     options.ClientId = configuration["Authentication:Google:ClientId"];
                     options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
                     //options.CallbackPath = "/signin-google";

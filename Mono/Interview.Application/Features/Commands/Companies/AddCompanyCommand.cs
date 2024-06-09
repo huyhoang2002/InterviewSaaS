@@ -22,7 +22,6 @@ namespace Interview.Application.Features.Commands.Companies
         public string CompanyDomain { get; set; }
         public string Email { get; set; }
         public string CompanyPhoneNumber { get; set; }
-        public AddressDTO Address { get; set; }
     }
 
     public class AddCompanyCommandHandler : ICommandHandler<AddCompanyCommand, CommandResult<Guid>>
@@ -39,7 +38,7 @@ namespace Interview.Application.Features.Commands.Companies
 
         }
 
-        public Task<CommandResult<Guid>> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult<Guid>> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -48,18 +47,18 @@ namespace Interview.Application.Features.Commands.Companies
                 var result = validator.Validate(companyMapper);
                 if (result.IsValid)
                 {
-                    _companyRepository.Add(companyMapper);
-                    return Task.FromResult(CommandResult<Guid>.Success(companyMapper.Id));
+                    await _companyRepository.AddAsync(companyMapper);
+                    return CommandResult<Guid>.Success(companyMapper.Id);
                 }
                 else
                 {
-                    return Task.FromResult(CommandResult<Guid>.Error("Validation failed !"));
+                    return CommandResult<Guid>.Error("Validation failed !");
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return Task.FromResult(CommandResult<Guid>.Error("Bad request"));
+                return CommandResult<Guid>.Error("Bad request");
             }
         }
     }

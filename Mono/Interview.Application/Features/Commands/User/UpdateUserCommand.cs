@@ -41,7 +41,7 @@ namespace Interview.Application.Features.Commands.User
 
         public async Task<CommandResult<Guid>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _userRepository.FindOneById(user => user.Id == request.UserId);
+            var user = _userRepository.FindOneById(user => user.Id == request.UserId, cancellationToken);
             var userMapper = _mapper.Map<Interview.Domain.Aggregates.User.User>(request);
             var validator = _validator.Validate(userMapper);
             if (validator.IsValid)
