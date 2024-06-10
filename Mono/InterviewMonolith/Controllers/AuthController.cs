@@ -1,7 +1,9 @@
 ﻿using Google.Apis.Auth;
 using Interview.Application.DTO.AppSettingDTO;
 using Interview.Application.Features.Commands.Accounts;
+using Interview.Application.Features.Queries.Accounts;
 using Interview.Infrastructure.CQRS.Commands;
+using Interview.Infrastructure.CQRS.Queries;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
@@ -23,12 +25,14 @@ namespace InterviewMonolith.Controllers
         private readonly IConfiguration _configuration;
         private readonly UrlOption _options;
         private readonly ICommandBus _commandBus;
+        private readonly IQueryBus _queryBus;
 
-        public AuthController(IConfiguration configuration, IOptions<UrlOption> options, ICommandBus commandBus) 
+        public AuthController(IConfiguration configuration, IOptions<UrlOption> options, ICommandBus commandBus, IQueryBus queryBus) 
         {
             _configuration = configuration;
             _options = options.Value;
             _commandBus = commandBus;
+            _queryBus = queryBus;
         }
 
         [HttpGet("external-url")]
@@ -82,6 +86,17 @@ namespace InterviewMonolith.Controllers
                 return Ok(accessToken);
             }
             return BadRequest();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAccount(string id)
+        {
+            var query = new GetAccountByIdQuery()
+            {
+                AccountId = id
+            };
+            var result = await _queryBus.SendAsync(query);
+            return Ok(result);
         }
     }
 }

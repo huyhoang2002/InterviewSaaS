@@ -19,6 +19,7 @@ namespace Interview.Domain.Aggregates.Identities
             RefreshToken = refreshToken;
             BlagFlag = blagFlag;
             AccountId = accountId;
+            CreatedAt = DateTime.Now;
         }
 
         public string AccessToken { get; set; }
@@ -26,5 +27,10 @@ namespace Interview.Domain.Aggregates.Identities
         public bool BlagFlag { get; set; }
         public string AccountId { get; set; }
         public Account Account { get; set; }
+
+        public void ExposeBlagFlag()
+        {
+            BlagFlag = true;
+        }
     }
 }

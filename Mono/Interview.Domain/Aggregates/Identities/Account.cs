@@ -9,8 +9,8 @@ namespace Interview.Domain.Aggregates.Identities
 {
     public class Account : IdentityUser
     {
-        private List<Token> tokens => new List<Token>();
-        public IReadOnlyCollection<Token> Tokens => tokens;
+        private List<Token> tokens { get; set; } = new List<Token>();
+        public virtual IReadOnlyCollection<Token> Tokens => tokens;
 
         public Account()
         {
@@ -25,7 +25,20 @@ namespace Interview.Domain.Aggregates.Identities
 
         public void StoreToken(string accessToken, string refreshToken, bool blagFlag, string accountId)
         {
-            tokens.Add(new Token(accessToken, refreshToken, blagFlag, accountId));
+            var token = new Token(accessToken, refreshToken, blagFlag, accountId);
+            tokens.Add(token);
+        }
+
+        public void FindAndModifyActiveToken(string accountId)
+        {
+            var tokensWithActiveBlagFlag = tokens.Where(_ => _.AccountId == accountId);
+            foreach(var token in tokensWithActiveBlagFlag)
+            {
+                if (token.BlagFlag == false)
+                {
+                    token.ExposeBlagFlag();
+                }
+            }
         }
     }
 }
