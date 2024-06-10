@@ -54,6 +54,11 @@ namespace Interview.Application.Features.Commands.Accounts
                 } 
                 return CommandResult<string>.Error("Role much match with the provided policy !");
             }
+            else
+            {
+                var roleProvided = Role.Roles.FirstOrDefault(_ => _.ToLower() == request.Role.ToLower());
+                await _userManager.AddToRoleAsync(account, roleProvided);
+            }
             return CommandResult<string>.Success(account.Id);
         }
     }

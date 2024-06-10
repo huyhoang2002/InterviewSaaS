@@ -14,6 +14,9 @@ namespace Interview.Infrastructure.Persistences.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<Account> builder)
         {
             builder.HasKey(_ => _.Id);
+
+            var tokenNavigation = builder.Metadata.FindNavigation(nameof(Account.Tokens));
+            tokenNavigation.SetPropertyAccessMode(PropertyAccessMode.Property);
         }
     }
 }

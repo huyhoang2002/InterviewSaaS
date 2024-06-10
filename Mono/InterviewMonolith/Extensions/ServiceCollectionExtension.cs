@@ -20,6 +20,7 @@ namespace InterviewMonolith.Extensions
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
+                options.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<InterviewDbContext>()
                 .AddDefaultTokenProviders();
@@ -28,13 +29,15 @@ namespace InterviewMonolith.Extensions
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                }).AddGoogle(options =>
-                {
-                    options.SaveTokens = true;
-                    options.ClientId = configuration["Authentication:Google:ClientId"];
-                    options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-                    //options.CallbackPath = "/signin-google";
-                }).AddJwtBearer(options =>
+                })
+                //.AddGoogle(options =>
+                //{
+                //    options.SaveTokens = true;
+                //    options.ClientId = configuration["Authentication:Google:ClientId"];
+                //    options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+                //    //options.CallbackPath = "/signin-google";
+                //})
+                .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
