@@ -2,6 +2,7 @@
 using Interview.Application.DTO.ResponseDTO;
 using Interview.Domain.Aggregates.Identities;
 using Interview.Infrastructure.CQRS.Commands;
+using Interview.Infrastructure.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -30,18 +31,20 @@ namespace Interview.Application.Features.Commands.Accounts
         private readonly ILogger<SignInCommandHandler> _logger;
         private readonly UserManager<Account> _userManager;
         private readonly JwtOption _jwtOption;
+        private readonly IAccountRepository _repository;
 
-        public SignInCommandHandler(SignInManager<Account> signInManager, ILogger<SignInCommandHandler> logger, UserManager<Account> userManager, IOptions<JwtOption> jwtOption)
+        public SignInCommandHandler(SignInManager<Account> signInManager, ILogger<SignInCommandHandler> logger, UserManager<Account> userManager, IOptions<JwtOption> jwtOption, IAccountRepository repository)
         {
             _signInManager = signInManager;
             _logger = logger;
             _userManager = userManager;
             _jwtOption = jwtOption.Value;
+            _repository = repository;
         }
 
         public async Task<CommandResult<TokenResponseDTO>> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
-            var account = await _userManager.FindByEmailAsync(request.Email);
+            var account = await _repository.FindOneByIdAsync(_ => _.Email == request.Email, cancellationToken);
             if (account == null)
             {
                 return CommandResult<TokenResponseDTO>.Error("Account is not found");
@@ -52,6 +55,7 @@ namespace Interview.Application.Features.Commands.Accounts
             {
                 return CommandResult<TokenResponseDTO>.Error("Email or password are invalid !");
             }
+            account.FindAndModifyActiveToken(account.Id);
             var accessToken = generateAccessToken(request, roles);
             var refreshToken = generateRefreshToken();
             account.StoreToken(accessToken, refreshToken, false, account.Id);

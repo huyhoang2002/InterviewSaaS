@@ -44,7 +44,7 @@ namespace Interview.Infrastructure.Base
             return DbSet.FirstOrDefault(predicate);
         }
 
-        public async Task<T> FindOneByIdAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+        public virtual async Task<T> FindOneByIdAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
         {
             var result = await DbSet.FirstOrDefaultAsync(predicate, cancellationToken);
             return result;
