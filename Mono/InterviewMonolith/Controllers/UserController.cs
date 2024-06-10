@@ -1,5 +1,7 @@
 ﻿using Interview.Application.Features.Commands.User;
+using Interview.Domain.Aggregates.Identities;
 using Interview.Infrastructure.CQRS.Commands;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +21,7 @@ namespace InterviewMonolith.Controllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "USER")]
         public async Task<IActionResult> GetUsers()
         {
             return Ok(new List<string>());

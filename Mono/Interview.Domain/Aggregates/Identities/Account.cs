@@ -22,5 +22,10 @@ namespace Interview.Domain.Aggregates.Identities
             Email = email;
             UserName = username;
         }
+
+        public void StoreToken(string accessToken, string refreshToken, bool blagFlag, string accountId)
+        {
+            tokens.Add(new Token(accessToken, refreshToken, blagFlag, accountId));
+        }
     }
 }

@@ -51,6 +51,17 @@ namespace InterviewMonolith.Controllers
             return Ok(result);
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> SignIn([FromBody] SignInCommand command)
+        {
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
         [HttpGet("/account/login")]
         public IActionResult SignInWithGoogle()
         {            

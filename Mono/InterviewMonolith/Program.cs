@@ -56,6 +56,7 @@ builder.Services.AddMapper();
 builder.Services.AddValidator();
 builder.Services.AddAuth(builder.Configuration);
 builder.Services.ConfigureOptions<UrlOptionSetup>();
+builder.Services.ConfigureOptions<JwtOptionSetup>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -66,7 +67,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
