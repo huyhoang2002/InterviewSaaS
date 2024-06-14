@@ -1,4 +1,5 @@
-﻿using Interview.Application.Features.Commands.Companies;
+﻿using Interview.Application.DTO.CommandDTO;
+using Interview.Application.Features.Commands.Companies;
 using Interview.Application.Features.Queries.Companies;
 using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.CQRS.Queries;
@@ -44,6 +45,7 @@ namespace InterviewMonolith.Controllers
                 return BadRequest(result);
             }
         }
+
         [HttpPost("address/{companyId}")]
         public async Task<IActionResult> CreateAddress(Guid companyId, [FromBody] AddCompanyAddressCommand command)
         {
@@ -57,6 +59,45 @@ namespace InterviewMonolith.Controllers
             {
                 return BadRequest(result);
             }
+        }
+
+        [HttpPost]
+        [Route("job-category/{companyId}")]
+        public async Task<IActionResult> CreateJobCategory(Guid companyId, [FromBody] JobCategoryDTO jobCategoryDTO)
+        {
+            var command = new AddJobCategoryCommand
+            {
+                CompanyId = companyId,
+                CategoryName = jobCategoryDTO.JobCategoryName
+            };
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            if (HttpContext.Response.StatusCode == 500)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error");
+            }
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("job/{companyId}/{jobCategoryId}")]
+        public async Task<IActionResult> CreateJob(Guid companyId, Guid jobCategoryId, [FromBody] JobDTO jobDTO)
+        {
+            var command = new AddJobCommand
+            {
+                CompanyId = companyId,
+                JobCategoryId = jobCategoryId,
+                JobDTO = jobDTO
+            };
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }

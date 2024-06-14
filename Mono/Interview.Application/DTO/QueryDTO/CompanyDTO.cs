@@ -14,6 +14,7 @@ namespace Interview.Application.DTO.QueryDTO
             string CompanyDescription,
             string CompanyDomain, 
             string CompanyPhoneNumber,
-            IEnumerable<AddressDTO> Address
+            IEnumerable<AddressDTO> Address,
+            IEnumerable<JobCategoryDTO> JobCategoryDTO
         );
 }

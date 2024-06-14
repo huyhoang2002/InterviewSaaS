@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,16 @@ namespace Interview.Infrastructure.Repositories
         {
             return DbSet
                 .Where(_ => _.IsDeleted == false)
-                .Include(_ => _.CompanyAddresses);
+                .Include(_ => _.CompanyAddresses)
+                .Include(_ => _.JobCategories);
+        }
+
+        public override async Task<Company> FindOneByIdAsync(Expression<Func<Company, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await DbSet
+                .Include(_ => _.CompanyAddresses)
+                .Include(_ => _.JobCategories)
+                .FirstOrDefaultAsync(_ => _.IsDeleted == false);
         }
     }
 }

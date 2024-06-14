@@ -4,6 +4,7 @@ using Interview.Infrastructure.Persistences.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Interview.Infrastructure.Migrations
 {
     [DbContext(typeof(InterviewDbContext))]
-    partial class InterviewDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240613070824_job-category-table")]
+    partial class jobcategorytable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,11 +306,7 @@ namespace Interview.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -320,11 +318,6 @@ namespace Interview.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryName")
-                        .IsUnique();
-
-                    b.HasIndex("CompanyId");
 
                     b.ToTable("JobCategory");
                 });
@@ -558,17 +551,6 @@ namespace Interview.Infrastructure.Migrations
                     b.Navigation("JobCategory");
                 });
 
-            modelBuilder.Entity("Interview.Domain.Companies.JobCategory", b =>
-                {
-                    b.HasOne("Interview.Domain.Companies.Company", "Company")
-                        .WithMany("JobCategories")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
             modelBuilder.Entity("Interview.Domain.Companies.Rating", b =>
                 {
                     b.HasOne("Interview.Domain.Companies.Company", "Company")
@@ -650,8 +632,6 @@ namespace Interview.Infrastructure.Migrations
             modelBuilder.Entity("Interview.Domain.Companies.Company", b =>
                 {
                     b.Navigation("CompanyAddresses");
-
-                    b.Navigation("JobCategories");
 
                     b.Navigation("Jobs");
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Interview.Infrastructure.Persistences.EntityTypeConfigurations
 {
-    public class JobEntityTypeConfiguration : IEntityTypeConfiguration<Job>
+    internal class JobEntityTypeConfiguration : IEntityTypeConfiguration<Job>
     {
         public void Configure(EntityTypeBuilder<Job> builder)
         {
@@ -20,6 +20,11 @@ namespace Interview.Infrastructure.Persistences.EntityTypeConfigurations
                 .HasOne(_ => _.Company)
                 .WithMany(_ => _.Jobs)
                 .HasForeignKey(_ => _.CompanyId)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder
+                .HasOne(_ => _.JobCategory)
+                .WithMany(_ => _.Jobs)
+                .HasForeignKey(_ => _.JobCategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
