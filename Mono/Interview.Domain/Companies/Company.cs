@@ -18,6 +18,9 @@ namespace Interview.Domain.Companies
         private readonly List<Address> companyAddresses = new List<Address>();
         public IReadOnlyCollection<Address> CompanyAddresses => companyAddresses;
 
+        private readonly List<JobCategory> jobCategories = new List<JobCategory>();
+        public IReadOnlyCollection<JobCategory> JobCategories => jobCategories; 
+
         private readonly List<Job> jobs = new List<Job>();
         public IReadOnlyCollection<Job> Jobs => jobs;
 
@@ -25,6 +28,8 @@ namespace Interview.Domain.Companies
         public IReadOnlyCollection<Rating> Ratings => ratings;
 
         private readonly List<Review> reviews = new List<Review>();
+        public IReadOnlyCollection<Review> Reviews => reviews;
+
 
         public Company(string companyName, string companyLogoUrl, string companyDescription, string companyDomain, string companyPhoneNumber, string email)
         {
@@ -35,12 +40,31 @@ namespace Interview.Domain.Companies
             CompanyPhoneNumber = companyPhoneNumber;
             Email = email;
         }
-
-        public IReadOnlyCollection<Review> Reviews => reviews;
-
         public void AddAddress(Address address)
         {
             companyAddresses.Add(address);
+        }
+
+        public void CreateJobCategory(string categoryName)
+        {
+            jobCategories.Add(new JobCategory(categoryName, Id));
+        }
+
+        public bool IsJobCategoryCreated(string jobCategoryName)
+        {
+            var jobCategory = jobCategories.FirstOrDefault(_ => _.CategoryName == jobCategoryName);
+            return jobCategory is not null;
+        }
+
+        public JobCategory FindJobCategory(Guid jobCategoryId)
+        {
+            var jobcategory = jobCategories.FirstOrDefault(_ => _.Id == jobCategoryId);
+            return jobcategory;
+        }
+
+        public void AddJob(Job job)
+        {
+            jobs.Add(new Job(job));
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Interview.Application.Mapper
             CreateMap<User, UpdateUserCommand>().ReverseMap();
             CreateMap<Company, AddCompanyCommand>().ReverseMap();
             CreateMap<Address, AddCompanyAddressCommand>().ReverseMap();
+            CreateMap<Job, JobDTO>().ReverseMap();
         }
     }
 }
