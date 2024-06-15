@@ -3,12 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Interview.Domain.Companies
 {
     public class JobCategory : EntityBase<Guid>
     {
+        public JobCategory()
+        {
+
+        }
+
         public JobCategory(string categoryName, Guid companyId)
         {
             CategoryName = categoryName;
@@ -20,6 +26,12 @@ namespace Interview.Domain.Companies
         public IReadOnlyCollection<Job> Jobs => jobs;
 
         public Guid CompanyId { get; set; }
+        [JsonIgnore]
         public Company Company { get; set; }
+
+        public IEnumerable<Job> GetJobsFromCategory()
+        {
+            return jobs as IEnumerable<Job>;
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace Interview.Infrastructure.Base
             return DbSet.Where(predicate);
         }
 
-        public T FindOneById(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+        public virtual T FindOneById(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
         {
             return DbSet.FirstOrDefault(predicate);
         }

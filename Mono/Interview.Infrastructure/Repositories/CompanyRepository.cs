@@ -31,7 +31,18 @@ namespace Interview.Infrastructure.Repositories
             return await DbSet
                 .Include(_ => _.CompanyAddresses)
                 .Include(_ => _.JobCategories)
+                .ThenInclude(_ => _.Jobs)
                 .FirstOrDefaultAsync(_ => _.IsDeleted == false);
+        }
+
+        public override Company FindOneById(Expression<Func<Company, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return DbSet
+                .Include(_ => _.CompanyAddresses)
+                .Include(_ => _.JobCategories)
+                .ThenInclude(_ => _.Jobs)
+                .AsSplitQuery()
+                .FirstOrDefault(_ => _.IsDeleted == false);
         }
     }
 }
