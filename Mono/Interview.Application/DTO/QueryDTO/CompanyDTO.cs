@@ -13,8 +13,6 @@ namespace Interview.Application.DTO.QueryDTO
             string CompanyLogoUrl,
             string CompanyDescription,
             string CompanyDomain, 
-            string CompanyPhoneNumber,
-            IEnumerable<AddressDTO> Address,
-            IEnumerable<JobCategoryDTO> JobCategoryDTO
+            string CompanyPhoneNumber
         );
 }

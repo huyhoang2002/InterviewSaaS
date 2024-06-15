@@ -33,9 +33,7 @@ namespace Interview.Application.Features.Queries.Companies
                     _.CompanyLogoUrl,
                     _.CompanyDescription,
                     _.CompanyDomain,
-                    _.CompanyPhoneNumber,
-                    _.CompanyAddresses.Select(_ => new AddressDTO(_.Id, _.Street, _.District, _.City, _.Province)),
-                    _.JobCategories.Select(_ => new DTO.CommandDTO.JobCategoryDTO(_.Id, _.CategoryName))
+                    _.CompanyPhoneNumber
                 ));
             return Task.FromResult(companiesViewModel);
         }

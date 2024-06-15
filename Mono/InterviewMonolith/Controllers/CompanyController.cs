@@ -1,6 +1,7 @@
 ﻿using Interview.Application.DTO.CommandDTO;
 using Interview.Application.Features.Commands.Companies;
 using Interview.Application.Features.Queries.Companies;
+using Interview.Domain.Companies;
 using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.CQRS.Queries;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -94,6 +95,65 @@ namespace InterviewMonolith.Controllers
             };
             var result = await _commandBus.SendAsync(command) as CommandResult;
             if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{companyId}/{jobCategoryId}")]
+        public async Task<IActionResult> GetJobsByCategoryId(Guid companyId, Guid jobCategoryId)
+        {
+            var query = new GetJobByCategoryQuery
+            {
+                CompanyId = companyId,
+                CategoryId = jobCategoryId
+            };
+            var result = await _queryBus.SendAsync(query);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{companyId}")]
+        public async Task<IActionResult> GetJobCategoriesByCompanyId(Guid companyId)
+        {
+            var query = new GetCategoryByCompanyIdQuery
+            {
+                CompanyId = companyId
+            };
+            var result = await _queryBus.SendAsync(query);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [Route("{companyId}/{jobId}")]
+        public async Task<IActionResult> UpdateJob(Guid companyId, Guid jobId, [FromBody] JobDTO jobDTO)
+        {
+            var command = new UpdateJobCommand
+            {
+                CompanyId = companyId,
+                JobId = jobId,
+                JobDTO = jobDTO
+            };
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        [Route("{companyId}")]
+        public async Task<IActionResult> DisableCompany(Guid companyId)
+        {
+            var command = new DeleteCompanyCommand
+            {
+                CompanyId = companyId
+            };
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess is false)
             {
                 return BadRequest(result);
             }

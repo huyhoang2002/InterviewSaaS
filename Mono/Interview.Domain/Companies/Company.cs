@@ -39,6 +39,7 @@ namespace Interview.Domain.Companies
             CompanyDomain = companyDomain;
             CompanyPhoneNumber = companyPhoneNumber;
             Email = email;
+            CreatedAt = DateTime.UtcNow;
         }
         public void AddAddress(Address address)
         {
@@ -62,9 +63,25 @@ namespace Interview.Domain.Companies
             return jobcategory;
         }
 
+        public IEnumerable<JobCategory> GetJobCategories(Guid companyId)
+        {
+            return jobCategories.FindAll(_ => _.CompanyId == companyId);
+        }
+
         public void AddJob(Job job)
         {
             jobs.Add(new Job(job));
+        }
+
+        public Job GetJob(Guid jobId)
+        {
+            return jobs.FirstOrDefault(_ => _.Id == jobId);
+        }
+
+        public void DisableCompany()
+        {
+
+            IsDeleted = true;
         }
     }
 }
