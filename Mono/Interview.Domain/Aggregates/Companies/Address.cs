@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Interview.Domain.Companies
+namespace Interview.Domain.Aggregates.Companies
 {
     public class Address : EntityBase<Guid>
     {
@@ -22,7 +22,7 @@ namespace Interview.Domain.Companies
         public string Street { get; set; }
         public string District { get; set; }
         public string City { get; set; }
-        public string? Province { get; set; }
+        public string Province { get; set; }
 
         public Guid CompanyId { get; set; }
         [JsonIgnore]

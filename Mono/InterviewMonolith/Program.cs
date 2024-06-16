@@ -3,6 +3,7 @@ using Interview.Application.Extensions;
 using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.Extensions;
 using InterviewMonolith.Extensions;
+using InterviewMonolith.Middlewares;
 using MediatR;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.Swagger;
@@ -75,6 +76,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
 app.MapControllers();
 

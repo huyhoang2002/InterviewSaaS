@@ -1,4 +1,4 @@
-﻿using Interview.Domain.Companies;
+﻿using Interview.Domain.Aggregates.Companies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

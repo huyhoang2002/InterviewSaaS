@@ -1,5 +1,5 @@
-﻿using Interview.Domain.Aggregates.Identities;
-using Interview.Domain.Companies;
+﻿using Interview.Domain.Aggregates.Companies;
+using Interview.Domain.Aggregates.Identities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

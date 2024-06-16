@@ -1,4 +1,4 @@
-﻿using Interview.Domain.Companies;
+﻿using Interview.Domain.Aggregates.Companies;
 using Interview.Infrastructure.Base;
 using Interview.Infrastructure.Persistences.ApplicationDbContext;
 using Interview.Infrastructure.Repositories.Interfaces;

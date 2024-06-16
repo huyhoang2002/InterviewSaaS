@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Interview.Domain.Companies
+namespace Interview.Domain.Aggregates.Companies
 {
     public class Review : EntityBase<Guid>
     {

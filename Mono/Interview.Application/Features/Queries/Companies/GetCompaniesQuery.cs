@@ -1,5 +1,4 @@
 ﻿using Interview.Application.DTO.QueryDTO;
-using Interview.Domain.Companies;
 using Interview.Infrastructure.CQRS.Queries;
 using Interview.Infrastructure.Repositories.Interfaces;
 using MediatR;

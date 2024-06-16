@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Interview.Domain.Companies
+namespace Interview.Domain.Aggregates.Companies
 {
     public class Job : EntityBase<Guid>
     {
