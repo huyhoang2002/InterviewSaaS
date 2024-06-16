@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Interview.Domain.Companies
+namespace Interview.Domain.Aggregates.Companies
 {
     public class Company : EntityBase<Guid>
     {
@@ -19,7 +19,7 @@ namespace Interview.Domain.Companies
         public IReadOnlyCollection<Address> CompanyAddresses => companyAddresses;
 
         private readonly List<JobCategory> jobCategories = new List<JobCategory>();
-        public IReadOnlyCollection<JobCategory> JobCategories => jobCategories; 
+        public IReadOnlyCollection<JobCategory> JobCategories => jobCategories;
 
         private readonly List<Job> jobs = new List<Job>();
         public IReadOnlyCollection<Job> Jobs => jobs;

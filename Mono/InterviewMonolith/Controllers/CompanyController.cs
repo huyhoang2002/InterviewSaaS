@@ -1,7 +1,7 @@
 ﻿using Interview.Application.DTO.CommandDTO;
 using Interview.Application.Features.Commands.Companies;
 using Interview.Application.Features.Queries.Companies;
-using Interview.Domain.Companies;
+using Interview.Domain;
 using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.CQRS.Queries;
 using Microsoft.AspNetCore.Authentication.Google;

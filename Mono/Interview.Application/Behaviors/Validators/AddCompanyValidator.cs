@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Interview.Domain.Companies;
+using Interview.Domain.Aggregates.Companies;
 using System;
 using System.Collections.Generic;
 using System.Linq;

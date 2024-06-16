@@ -1,4 +1,4 @@
-﻿using Interview.Domain.Aggregates.Companies;
+﻿using Interview.Domain.Aggregates.Interviews;
 using Interview.Infrastructure.Base.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace Interview.Infrastructure.Repositories.Interfaces
 {
-    public interface ICompanyRepository : IRepositoryBase<Company>
+    public interface IInterviewCollectionRepository : IRepositoryBase<InterviewCollection>
     {
-        IEnumerable<Company> GetCompanies();
     }
 }

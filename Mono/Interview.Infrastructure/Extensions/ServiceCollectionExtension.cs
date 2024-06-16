@@ -49,6 +49,7 @@ namespace Interview.Infrastructure.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IInterviewCollectionRepository, InterviewCollectionRepository>();
             return services;
         }
     }

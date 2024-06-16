@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Interview.Application.DTO.CommandDTO;
-using Interview.Domain.Companies;
+using Interview.Domain.Aggregates.Companies;
 using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.Repositories.Interfaces;
 using System;

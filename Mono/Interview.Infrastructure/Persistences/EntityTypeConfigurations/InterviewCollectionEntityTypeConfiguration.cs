@@ -1,4 +1,4 @@
-﻿using Interview.Domain.Aggregates.Companies;
+﻿using Interview.Domain.Aggregates.Interviews;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Interview.Infrastructure.Persistences.EntityTypeConfigurations
 {
-    internal class AddressEntityTypeConfiguration : IEntityTypeConfiguration<Address>
+    internal sealed class InterviewCollectionEntityTypeConfiguration : IEntityTypeConfiguration<InterviewCollection>
     {
-        public void Configure(EntityTypeBuilder<Address> builder)
+        public void Configure(EntityTypeBuilder<InterviewCollection> builder)
         {
             builder.HasKey(_ => _.Id);
             builder.Property(_ => _.Id).ValueGeneratedOnAdd();
-
-            builder.HasOne(_ => _.Company).WithMany(_ => _.CompanyAddresses).HasForeignKey(_ => _.CompanyId).OnDelete(DeleteBehavior.Cascade);
+            builder.Property(_ => _.CollectionName).IsRequired();
+            builder.HasIndex(_ => _.CollectionName).IsUnique();
         }
     }
 }

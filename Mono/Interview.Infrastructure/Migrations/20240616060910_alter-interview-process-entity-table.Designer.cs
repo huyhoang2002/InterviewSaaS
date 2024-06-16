@@ -4,6 +4,7 @@ using Interview.Infrastructure.Persistences.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Interview.Infrastructure.Migrations
 {
     [DbContext(typeof(InterviewDbContext))]
-    partial class InterviewDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240616060910_alter-interview-process-entity-table")]
+    partial class alterinterviewprocessentitytable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace Interview.Infrastructure.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Address", (string)null);
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Interview.Domain.Aggregates.Companies.Company", b =>
@@ -94,7 +96,7 @@ namespace Interview.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Company", (string)null);
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("Interview.Domain.Aggregates.Companies.Job", b =>
@@ -142,7 +144,7 @@ namespace Interview.Infrastructure.Migrations
 
                     b.HasIndex("JobCategoryId");
 
-                    b.ToTable("Job", (string)null);
+                    b.ToTable("Job");
                 });
 
             modelBuilder.Entity("Interview.Domain.Aggregates.Companies.JobCategory", b =>
@@ -174,7 +176,7 @@ namespace Interview.Infrastructure.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("JobCategory", (string)null);
+                    b.ToTable("JobCategory");
                 });
 
             modelBuilder.Entity("Interview.Domain.Aggregates.Companies.Rating", b =>
@@ -202,7 +204,7 @@ namespace Interview.Infrastructure.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Rating", (string)null);
+                    b.ToTable("Rating");
                 });
 
             modelBuilder.Entity("Interview.Domain.Aggregates.Companies.Review", b =>
@@ -230,7 +232,7 @@ namespace Interview.Infrastructure.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Review", (string)null);
+                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("Interview.Domain.Aggregates.Identities.Account", b =>
@@ -331,7 +333,7 @@ namespace Interview.Infrastructure.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Token", (string)null);
+                    b.ToTable("Token");
                 });
 
             modelBuilder.Entity("Interview.Domain.Aggregates.Interviews.InterviewCollection", b =>
@@ -361,7 +363,7 @@ namespace Interview.Infrastructure.Migrations
                     b.HasIndex("CollectionName")
                         .IsUnique();
 
-                    b.ToTable("InterviewCollection", (string)null);
+                    b.ToTable("InterviewCollection");
                 });
 
             modelBuilder.Entity("Interview.Domain.Aggregates.Interviews.InterviewProcess", b =>
@@ -394,7 +396,7 @@ namespace Interview.Infrastructure.Migrations
 
                     b.HasIndex("InterviewCollectionId");
 
-                    b.ToTable("InterviewProcess", (string)null);
+                    b.ToTable("InterviewProcess");
                 });
 
             modelBuilder.Entity("Interview.Domain.Aggregates.User.User", b =>
@@ -445,7 +447,7 @@ namespace Interview.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
