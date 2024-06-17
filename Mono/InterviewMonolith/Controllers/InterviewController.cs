@@ -5,6 +5,7 @@ using Interview.Infrastructure.CQRS.Commands;
 using Interview.Infrastructure.CQRS.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.Swagger.Annotations;
 
 namespace InterviewMonolith.Controllers
 {
@@ -69,5 +70,74 @@ namespace InterviewMonolith.Controllers
             var result = await _queryBus.SendAsync(query);
             return Ok(result);
         }
+
+        [HttpPut]
+        [Route("{collectionId}")]
+        public async Task<IActionResult> UpdateCollectionName(Guid collectionId, [FromBody] UpdateCollectionNameDTO updateCollectionNameDTO)
+        {
+            var command = new UpdateInterviewCollectionNameCommand
+            {
+                InterviewCollectionId = collectionId,
+                CollectionName = updateCollectionNameDTO.CollectionName
+            };
+            var result = await _commandBus.SendAsync(command) as CommandResult<Guid>;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [Route("{collectionId}/{stepId}")]
+        public async Task<IActionResult> UpdateProcessStep(Guid collectionId, Guid stepId, [FromBody] UpdateStepDTO updateStepDTO)
+        {
+            var command = new UpdateInterviewProcessStepCommand()
+            {
+                CollectionId = collectionId,
+                StepId = stepId,
+                UpdateStepDTO = updateStepDTO
+            };
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        [Route("{collectionId}/{stepId}")]
+        public async Task<IActionResult> DeleteProcessStep(Guid collectionId, Guid stepId)
+        {
+            var command = new DeleteStepFromProcessCommand
+            {
+                CollectionId = collectionId,
+                StepId = stepId
+            };
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        [Route("{collectionId}")]
+        public async Task<IActionResult> DeleteCollection(Guid collectionId)
+        {
+            var command = new DeleteCollectionCommand
+            {
+                CollectionId = collectionId
+            };
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
     }
 }
+ 

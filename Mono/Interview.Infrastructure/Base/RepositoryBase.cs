@@ -50,7 +50,7 @@ namespace Interview.Infrastructure.Base
             return result;
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return DbSet.AsNoTracking();
         }

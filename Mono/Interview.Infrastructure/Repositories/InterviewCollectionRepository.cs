@@ -18,9 +18,19 @@ namespace Interview.Infrastructure.Repositories
         {
         }
 
+        public override IEnumerable<InterviewCollection> GetAll()
+        {
+            return DbSet
+                .Include(_ => _.Processes)
+                .Where(_ => _.IsDeleted == false);
+        }
+
         public override InterviewCollection FindOneById(Expression<Func<InterviewCollection, bool>> predicate, CancellationToken cancellationToken)
         {
-            return DbSet.Include(_ => _.Processes).FirstOrDefault(predicate);
+            return DbSet
+                .Include(_ => _.Processes)
+                .Where(_ => _.IsDeleted == false)
+                .FirstOrDefault(predicate);
         }
     }
 }
