@@ -31,5 +31,25 @@ namespace Interview.Domain.Aggregates.Interviews
         {
             processes.Add(process);
         }
+
+        public void UpdateName(string name)
+        {
+            CollectionName = name;
+        }
+
+        public InterviewProcess GetProcess(Guid stepId)
+        {
+            return Processes.FirstOrDefault(_ => _.Id == stepId);
+        }
+
+        public void RemoveStep(InterviewProcess process)
+        {
+            processes.Remove(process);
+        }
+
+        public void RemoveCollection()
+        {
+            IsDeleted = true;
+        }
     }
 }

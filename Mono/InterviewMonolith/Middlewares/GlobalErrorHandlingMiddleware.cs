@@ -3,10 +3,12 @@
     public class GlobalErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<GlobalErrorHandlingMiddleware> _logger;
 
-        public GlobalErrorHandlingMiddleware(RequestDelegate next)
+        public GlobalErrorHandlingMiddleware(RequestDelegate next, ILogger<GlobalErrorHandlingMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -17,8 +19,9 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
+                context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync("Internal server error");
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             }
         }
     }
