@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Auth;
 using Interview.Application.DTO.AppSettingDTO;
+using Interview.Application.DTO.CommandDTO;
 using Interview.Application.Features.Commands.Accounts;
 using Interview.Application.Features.Queries.Accounts;
 using Interview.Infrastructure.CQRS.Commands;
@@ -96,6 +97,23 @@ namespace InterviewMonolith.Controllers
                 AccountId = id
             };
             var result = await _queryBus.SendAsync(query);
+            return Ok(result);
+        }
+
+        [HttpPut("{accountId}")]
+        public async Task<IActionResult> RefreshToken(string accountId, [FromBody] RefreshTokenDTO refreshTokenDTO)
+        {
+            var command = new RefreshTokenCommand
+            {
+                AccessToken = refreshTokenDTO.accessToken,
+                RefreshToken = refreshTokenDTO.RefreshToken,
+                AccountId = accountId
+            };
+            var result = await _commandBus.SendAsync(command) as CommandResult;
+            if (result?.IsSuccess == false)
+            {
+                return BadRequest(result);
+            }
             return Ok(result);
         }
     }

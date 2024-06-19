@@ -13,6 +13,13 @@ namespace InterviewMonolith.Extensions
     {
         public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "allowedOrigin", policy =>
+                {
+                    policy.WithOrigins("http//localhost:3000").AllowAnyMethod().AllowAnyHeader();
+                });
+            });
             services.AddIdentity<Account, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 8;

@@ -40,5 +40,23 @@ namespace Interview.Domain.Aggregates.Identities
                 }
             }
         }
+
+        public Token GetActiveToken(string accountId)
+        {
+            var token = Tokens.FirstOrDefault(_ => _.AccountId == accountId && _.BlagFlag == false);
+            return token;
+        }
+
+        public bool CompareRefreshToken(Token token, string refreshToken)
+        {
+            return token.RefreshToken == refreshToken;
+        }
+        
+        public void RefreshToken(string accountId, string accessToken, string refreshToken)
+        {
+            var activeToken = GetActiveToken(accountId);
+            activeToken.AccessToken = accessToken;
+            activeToken.RefreshToken = refreshToken;
+        }
     }
 }

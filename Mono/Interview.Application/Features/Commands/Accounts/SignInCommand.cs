@@ -56,7 +56,7 @@ namespace Interview.Application.Features.Commands.Accounts
                 return CommandResult<TokenResponseDTO>.Error("Email or password are invalid !");
             }
             account.FindAndModifyActiveToken(account.Id);
-            var accessToken = generateAccessToken(request, roles);
+            var accessToken = generateAccessToken(request, account.Id, roles);
             var refreshToken = generateRefreshToken();
             account.StoreToken(accessToken, refreshToken, false, account.Id);
             return CommandResult<TokenResponseDTO>.Success(new TokenResponseDTO(accessToken, refreshToken, "Bearer"));
@@ -72,14 +72,14 @@ namespace Interview.Application.Features.Commands.Accounts
             }
         }
 
-        private string generateAccessToken(SignInCommand request, IList<string> roles)
+        private string generateAccessToken(SignInCommand request, string id, IList<string> roles)
         {
             var issuer = _jwtOption.Issuer;
             var audience = _jwtOption.Audience;
             var key = Encoding.ASCII.GetBytes(_jwtOption.Key);
             var claims = new List<Claim>
                 {
-
+                    new Claim(JwtRegisteredClaimNames.NameId, id),
                     new Claim(JwtRegisteredClaimNames.Email, request.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
